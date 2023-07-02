@@ -3,6 +3,8 @@
   <component name="WebContextManager">
     <option name="state">
       <map>
+        <entry key="file://$PROJECT_DIR$/mywebwork/web/WEB-INF/findseat.html" value="file://$PROJECT_DIR$/mywebwork/web/WEB-INF" />
+        <entry key="file://$PROJECT_DIR$/mywebwork/web/WEB-INF/findseatavaliable.html" value="file://$PROJECT_DIR$/mywebwork/web/WEB-INF" />
         <entry key="file://$PROJECT_DIR$/mywebwork/web/WEB-INF/index.html" value="file://$PROJECT_DIR$/mywebwork/web/WEB-INF" />
         <entry key="file://$PROJECT_DIR$/mywebwork/web/WEB-INF/search.html" value="file://$PROJECT_DIR$/mywebwork/web/WEB-INF" />
       </map>
