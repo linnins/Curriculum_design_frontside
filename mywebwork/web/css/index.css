@@ -1,0 +1,112 @@
+/**********public**********/
+*{
+    margin: 0;
+    padding: 0;
+}
+ul{
+    list-style-type: none;
+}
+body{
+    background: #fcfcfc;
+}
+a{
+    text-decoration-line: none;
+}
+/**********Nav Public**********/
+#sideBox,
+.sideLih,
+.sideHead{
+    background: #306BA8;
+}
+.sideLih,
+.sideHead{
+    border-bottom: 1px solid #fff;
+    color: #fff;
+}
+#sideBox,
+.sideLiUl{
+    box-shadow: 1px 0 3px #306BA8;
+}
+/**********Nav Box**********/
+#sideBox{
+    position: fixed;
+    left: 0;
+    top:0%;
+    width: 100px;
+    padding: 0 0 20px 0;
+}
+
+/**********Nav header**********/
+.sideHead{
+    height: 55px;
+    line-height: 55px;
+    color: #fff;
+    text-align: center;
+    text-shadow: 1px 0px 0px #ccc;
+}
+
+/**********Nav body**********/
+.sideLi{
+    position: relative;
+    left: 0;
+    top:0;
+}
+.sideLih{
+    padding: 10px 0px 10px 20px;
+    font-weight: lighter;
+}
+
+.sideLih a{
+    color: #fff;
+}
+.sideLiUl{
+    background:#214a76;
+    position: absolute;
+    left: 100px;
+    top:0;
+    width: 160px;
+    display: none;
+    opacity:0;
+    filter:alpha(opacity=0);
+    overflow: hidden;
+    border: 1px solid #214a76;
+    border-left: none;
+    border-radius: 3px 5px 5px 3px;
+}
+.sidebottom{
+    top:-300%;
+}
+.sideLiUl li{
+    color: #fff;
+    float: left;
+    overflow: hidden;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 5px;
+    display: inline-block;
+    width: 90px;
+}
+.sideLiUl li a{
+    color: #fff;
+    font-weight: lighter;
+    font-size:12px;
+}
+.sideLi h5:hover,
+.sideLiUl li:hover{
+    cursor: pointer;
+}
+.sideLiUl li:hover{
+    text-decoration-line: underline;
+}
+
+#ifr{
+    position: fixed;
+    left: 180px;
+    top:1%;
+    height:90%;
+    width: 70%;
+    padding: 0 0 20px 0;
+}
