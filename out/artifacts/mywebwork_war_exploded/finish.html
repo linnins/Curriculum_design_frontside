@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="css/seatIn.css">
+</head>
+<body>
+<div class="finish">
+    <div id="alertMsg" class="alert alert-danger"></div>
+    <div class="seatinput">
+        <label for="partition">分区:</label>
+        <input type="text" id="partition" name="partition"><br>
+
+        <label for="seat">座号:</label>
+        <input type="text" id="seat" name="seat"><br>
+        <button type="button" id="btn_sub">取消预约</button>
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+        // 1. 给登录按钮绑定单击事件
+        $("#btn_sub").on("click", function() {
+            var place = document.getElementById('partition').value;
+            var seat = document.getElementById('seat').value;
+            $.get("/seat/endseat ", {token: " ", place: place,seat:seat}, function (data) {
+                $("#alertMsg").html(data.msg);
+            });
+        });
+    })
+</script>
+</body>
+</html>

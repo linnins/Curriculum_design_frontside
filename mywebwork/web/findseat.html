@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jquery.validate.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/seatIn.css">
+    <link rel="stylesheet" type="text/css" href="../css/seatlist.css">
+</head>
+<body>
+<div class="findseat">
+    <div class="seatinput">
+        <label for="partition">分区:</label>
+        <input type="text" id="partition" name="partition"><br>
+
+        <label for="seat">座号:</label>
+        <input type="text" id="seat" name="seat"><br>
+
+        <label for="start-hour">开始小时:</label>
+        <select id="start-hour" name="start-hour">
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+        </select><br>
+
+        <label for="start-minute">开始分钟:</label>
+        <select id="start-minute" name="start-minute">
+            <option value="00">00</option>
+            <option value="15">15</option>
+            <option value="30">30</option>
+            <option value="45">45</option>
+        </select><br>
+
+        <label for="end-hour">结束小时:</label>
+        <select id="end-hour" name="end-hour">
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+        </select><br>
+
+        <label for="end-minute">结束分钟:</label>
+        <select id="end-minute" name="end-minute">
+            <option value="00">00</option>
+            <option value="15">15</option>
+            <option value="30">30</option>
+            <option value="45">45</option>
+        </select><br>
+        <button type="button" id="btn_sub">查询</button>
+    </div>
+
+    <div class="show" id="showseat">
+        <!--<p>当前预约人：</p><ol>
+        <li>第1位预约人：10:30-&#45;&#45;17:45</li>
+        <li>第2位预约人：10:30-&#45;&#45;17:45</li>
+        <li>第3位预约人：10:30-&#45;&#45;17:45</li>
+        <li>第4位预约人：10:30-&#45;&#45;17:45</li>-->
+    </ol>
+
+    </div>
+
+</div>
+<script>
+    $(function () {
+        // 1. 给登录按钮绑定单击事件
+        $("#btn_sub").on("click", function() {
+            var place = document.getElementById('partition').value;
+            var seat = document.getElementById('seat').value;
+            var hour_f = document.getElementById('start-hour').value;
+            var min_f = document.getElementById('start-minute').value;
+            var hour_t = document.getElementById('end-hour').value;
+            var min_t = document.getElementById('end-minute').value;
+            $.get(" /seat/queryseat ", {token: " ", place: place,seat:seat, hour_f: hour_f, min_f: min_f, hour_t: hour_t, min_t: min_t
+            }, function (data) {
+                if(data.seat === 0){
+                    var lis ='<p>当前预约人数为0</p>'
+                    $("#showseat").html(lis);
+                } else{
+                    var length = 2;  // 指定分割长度
+                    var substrings = [];
+                    for (var i = 0; i < data.time.length; i += length) {
+                        var substring = data.time.substr(i, length);
+                        substrings.push(substring);
+                    }
+                    var numbers = substrings.map(function(substring) {
+                        return parseInt(substring);
+                    });
+                    var count = 0
+                    var lis ='<p>当前预约人：</p><ol>'
+                    for(var i = 0; i < data.time_cnt; i += length){
+                    var li ='<li>第'+i+'位预约人： '+numbers[count]+':'+numbers[count+1]+'---'+numbers[count+2]+':'+numbers[count+3]+'</li>';
+                    lis+=li;
+                    count+=4
+                    }
+                    lis+='</ol>';
+                    $("#showseat").html(lis);
+                }
+            });
+
+
+        });
+    })
+</script>
+</body>
+</html>

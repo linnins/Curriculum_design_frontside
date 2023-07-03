@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="../js/jquery-3.3.1.min.js"></script>
-    <script src="../js/jquery.validate.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../css/seatIn.css">
-    <link rel="stylesheet" type="text/css" href="../css/seatlist.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/seatIn.css">
+    <link rel="stylesheet" type="text/css" href="css/seatlist.css">
 </head>
 <body>
 <div class="seat">
@@ -65,12 +65,12 @@
     </div>
 
     <div class="show" id="avaliableseat">
-        <p>可用座位：</p><ol>
+       <!-- <p>可用座位：</p><ol>
         <li>第1号座位</li>
         <li>第1号座位</li>
         <li>第1号座位</li>
         <li>第1号座位</li>
-    </ol>
+    </ol>-->
 
     </div>
 
@@ -84,7 +84,8 @@
             var min_f = document.getElementById('start-minute').value;
             var hour_t = document.getElementById('end-hour').value;
             var min_t = document.getElementById('end-minute').value;
-            $.get(" /seat/query ", {token: " ", place: place, hour_f: hour_f, min_f: min_f, hour_t: hour_t, min_t: min_t
+            var token = ""
+            $.get(" /seat/query ", {token:token, place: place, hour_f: hour_f, min_f: min_f, hour_t: hour_t, min_t: min_t
             }, function (data) {
                 var digits = data.plc.split("");  // 将字符串拆分为字符数组
                 var numbers = digits.map(Number);

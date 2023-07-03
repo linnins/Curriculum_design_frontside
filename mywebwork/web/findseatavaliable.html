@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="../js/jquery-3.3.1.min.js"></script>
-    <script src="../js/jquery.validate.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../css/seatIn.css">
-    <link rel="stylesheet" type="text/css" href="../css/seatlist.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/seatIn.css">
+    <link rel="stylesheet" type="text/css" href="css/seatlist.css">
 </head>
 <body>
-<div class="findseat">
+<div class="seat">
     <div class="seatinput">
         <label for="partition">分区:</label>
         <input type="text" id="partition" name="partition"><br>
-
-        <label for="seat">座号:</label>
-        <input type="text" id="seat" name="seat"><br>
 
         <label for="start-hour">开始小时:</label>
         <select id="start-hour" name="start-hour">
@@ -67,13 +64,13 @@
         <button type="button" id="btn_sub">查询</button>
     </div>
 
-    <div class="show" id="showseat">
-        <p>当前预约人：</p><ol>
-        <li>第1位预约人：10:30---17:45</li>
-        <li>第2位预约人：10:30---17:45</li>
-        <li>第3位预约人：10:30---17:45</li>
-        <li>第4位预约人：10:30---17:45</li>
-    </ol>
+    <div class="show" id="avaliableseat">
+       <!-- <p>可用座位：</p><ol>
+        <li>第1号座位</li>
+        <li>第1号座位</li>
+        <li>第1号座位</li>
+        <li>第1号座位</li>
+    </ol>-->
 
     </div>
 
@@ -83,41 +80,30 @@
         // 1. 给登录按钮绑定单击事件
         $("#btn_sub").on("click", function() {
             var place = document.getElementById('partition').value;
-            var seat = document.getElementById('seat').value;
             var hour_f = document.getElementById('start-hour').value;
             var min_f = document.getElementById('start-minute').value;
             var hour_t = document.getElementById('end-hour').value;
             var min_t = document.getElementById('end-minute').value;
-            $.get(" /seat/queryseat ", {token: " ", place: place,seat:seat, hour_f: hour_f, min_f: min_f, hour_t: hour_t, min_t: min_t
+            var token = ""
+            $.get(" /seat/query ", {token:token, place: place, hour_f: hour_f, min_f: min_f, hour_t: hour_t, min_t: min_t
             }, function (data) {
-                if(data.seat === 0){
-                    var lis ='<p>当前预约人数为0</p>'
-                    $("#showseat").html(lis);
-                } else{
-                    var length = 2;  // 指定分割长度
-                    var substrings = [];
-                    for (var i = 0; i < data.time.length; i += length) {
-                        var substring = data.time.substr(i, length);
-                        substrings.push(substring);
+                var digits = data.plc.split("");  // 将字符串拆分为字符数组
+                var numbers = digits.map(Number);
+                var lis ='<p>可用座位：</p>><ol>'
+                for (var i = 0; i < numbers.length; i++) {
+                    if(numbers[i]!==0){
+                        li='<li>第'+i+'号座位</li>'
+                        lis += li
                     }
-                    var numbers = substrings.map(function(substring) {
-                        return parseInt(substring);
-                    });
-                    var count = 0
-                    var lis ='<p>当前预约人：</p><ol>'
-                    for(var i = 0; i < data.time_cnt; i += length){
-                    var li ='<li>第'+i+'位预约人： '+numbers[count]+':'+numbers[count+1]+'---'+numbers[count+2]+':'+numbers[count+3]+'</li>';
-                    lis+=li;
-                    count+=4
-                    }
-                    lis+='</ol>';
-                    $("#showseat").html(lis);
                 }
+                lis+='</ol>'
+                $("#avaliableseat").html(lis);
             });
 
 
         });
     })
 </script>
+
 </body>
 </html>
