@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jquery.validate.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/seatIn.css">
+    <link rel="stylesheet" type="text/css" href="../css/seatlist.css">
 </head>
 <body>
 <div class="findseat">
-    <div>
+    <div class="seatinput">
         <label for="partition">分区:</label>
         <input type="text" id="partition" name="partition"><br>
 
-        <label for="partition">座位号:</label>
+        <label for="seat">座号:</label>
         <input type="text" id="seat" name="seat"><br>
 
         <label for="start-hour">开始小时:</label>
@@ -64,7 +68,12 @@
     </div>
 
     <div class="show" id="showseat">
-
+        <p>当前预约人：</p><ol>
+        <li>第1位预约人：10:30---17:45</li>
+        <li>第2位预约人：10:30---17:45</li>
+        <li>第3位预约人：10:30---17:45</li>
+        <li>第4位预约人：10:30---17:45</li>
+    </ol>
 
     </div>
 
@@ -72,7 +81,7 @@
 <script>
     $(function () {
         // 1. 给登录按钮绑定单击事件
-        $("#btn_sub").click(function () {
+        $("#btn_sub").on("click", function() {
             var place = document.getElementById('partition').value;
             var seat = document.getElementById('seat').value;
             var hour_f = document.getElementById('start-hour').value;
@@ -81,11 +90,10 @@
             var min_t = document.getElementById('end-minute').value;
             $.get(" /seat/queryseat ", {token: " ", place: place,seat:seat, hour_f: hour_f, min_f: min_f, hour_t: hour_t, min_t: min_t
             }, function (data) {
-                if(data.seat == 0){
+                if(data.seat === 0){
                     var lis ='<p>当前预约人数为0</p>'
                     $("#showseat").html(lis);
-                }
-                else{
+                } else{
                     var length = 2;  // 指定分割长度
                     var substrings = [];
                     for (var i = 0; i < data.time.length; i += length) {

@@ -5,11 +5,12 @@
     <title>Title</title>
     <script src="../js/jquery-3.3.1.min.js"></script>
     <script src="../js/jquery.validate.min.js"></script>
-    <script src="../js/messages_zh.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/seatIn.css">
+    <link rel="stylesheet" type="text/css" href="../css/seatlist.css">
 </head>
 <body>
 <div class="seat">
-    <div>
+    <div class="seatinput">
         <label for="partition">分区:</label>
         <input type="text" id="partition" name="partition"><br>
 
@@ -64,7 +65,12 @@
     </div>
 
     <div class="show" id="avaliableseat">
-
+        <p>可用座位：</p><ol>
+        <li>第1号座位</li>
+        <li>第1号座位</li>
+        <li>第1号座位</li>
+        <li>第1号座位</li>
+    </ol>
 
     </div>
 
@@ -72,7 +78,7 @@
 <script>
     $(function () {
         // 1. 给登录按钮绑定单击事件
-        $("#btn_sub").click(function () {
+        $("#btn_sub").on("click", function() {
             var place = document.getElementById('partition').value;
             var hour_f = document.getElementById('start-hour').value;
             var min_f = document.getElementById('start-minute').value;
@@ -82,14 +88,14 @@
             }, function (data) {
                 var digits = data.plc.split("");  // 将字符串拆分为字符数组
                 var numbers = digits.map(Number);
-                var lis ='<p>可用座位：'
+                var lis ='<p>可用座位：</p>><ol>'
                 for (var i = 0; i < numbers.length; i++) {
-                    if(numbers[i]!=0){
-                        li='第'+i+'号   '
+                    if(numbers[i]!==0){
+                        li='<li>第'+i+'号座位</li>'
                         lis += li
                     }
                 }
-                lis+='</p>'
+                lis+='</ol>'
                 $("#avaliableseat").html(lis);
             });
 

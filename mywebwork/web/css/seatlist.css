@@ -1,0 +1,30 @@
+.seat{
+    margin-bottom: 20px;
+}
+
+.seatinput{
+    position: fixed;
+    left: 0;
+    top:5%;
+    width: 30%;
+    padding: 0 0 20px 0;
+}
+.show{
+    position: fixed;
+    left: 30%;
+    top:5%;
+    width: 50%;
+    padding: 0 0 20px 0;
+}
+
+.show ol {
+    list-style-type: decimal;
+    padding-left: 20px;
+}
+
+
+.show li {
+    margin-bottom: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+}
