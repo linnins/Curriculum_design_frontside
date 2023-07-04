@@ -1,0 +1,50 @@
+.findbook {
+    display: flex;
+    justify-content: space-between;
+}
+
+.searchbox {
+    width: 100px;
+}
+
+.titleofsearch {
+    margin-top: 0;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.showbooks {
+    left: 150px;
+}
+
+.show {
+    width: 900px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ccc; /* 设置单元格边框 */
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}

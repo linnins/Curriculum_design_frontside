@@ -76,6 +76,19 @@
 
 </div>
 <script>
+    function getTokenFromCookie() {
+        var cookies = document.cookie.split(";"); // 获取所有的Cookie
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.startsWith("token=")) {
+                // 找到名为"token"的Cookie
+                var token = cookie.substring("token=".length, cookie.length);
+                return token;
+            }
+        }
+        return null; // 如果没有找到token，则返回null
+    }
+
     $(function () {
         // 1. 给登录按钮绑定单击事件
         $("#btn_sub").on("click", function() {
@@ -84,12 +97,12 @@
             var min_f = document.getElementById('start-minute').value;
             var hour_t = document.getElementById('end-hour').value;
             var min_t = document.getElementById('end-minute').value;
-            var token = ""
+            var token = getTokenFromCookie();
             $.get(" /seat/query ", {token:token, place: place, hour_f: hour_f, min_f: min_f, hour_t: hour_t, min_t: min_t
             }, function (data) {
                 var digits = data.plc.split("");  // 将字符串拆分为字符数组
                 var numbers = digits.map(Number);
-                var lis ='<p>可用座位：</p>><ol>'
+                var lis ='<p>可用座位：</p><ol>'
                 for (var i = 0; i < numbers.length; i++) {
                     if(numbers[i]!==0){
                         li='<li>第'+i+'号座位</li>'

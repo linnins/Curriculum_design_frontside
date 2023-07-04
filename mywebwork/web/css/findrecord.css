@@ -1,0 +1,19 @@
+.showbooks {
+    left: 5%;
+}
+
+.show {
+    width: 900px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ccc; /* 设置单元格边框 */
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}

@@ -11,20 +11,19 @@
 <body>
 <div class="findbook">
     <div class="searchbox">
-    <h3 class="titleofsearch">查询书籍</h3>
+        <h3 class="titleofsearch">查询书籍</h3>
 
-    <form action="" id="findBookByNameForm" method="post" accept-charset="utf-8">
-        <label>请输入书籍编号</label><br>
-        <input type="text" name="bookId" id="bookName"><br><br>
-        <button type="button" id="Seach_sub">归还</button>
-    </form>
-</div>
-<div id="alertMsg" class="alert alert-danger"></div>
+        <form action="" id="findBookByNameForm" method="post" accept-charset="utf-8">
+            <label>请输入书籍编号</label><br>
+            <input type="text" name="bookId" id="bookName"><br><br>
+            <button type="button" id="Seach_sub">借阅</button>
+        </form>
+    </div>
+    <div id="alertMsg" class="alert alert-danger"></div>
 
 </div>
 
 <script>
-
     function getTokenFromCookie() {
         var cookies = document.cookie.split(";"); // 获取所有的Cookie
         for (var i = 0; i < cookies.length; i++) {
@@ -45,11 +44,11 @@
             var code = resp.code;
             var msg = resp.msg;
             if (code === 1) {
-                var lis ='还书成功'
+                var lis ='借阅成功'
 
                 $("#alertMsg").html(lis);
             }else{
-                var lis ='已归还或未借阅'
+                var lis ='借阅失败'
                 $("#alertMsg").html(lis);
             }
         });

@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="../js/jquery-3.3.1.min.js"></script>
-    <script src="../js/jquery.validate.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../css/seatIn.css">
-    <link rel="stylesheet" type="text/css" href="../css/seatlist.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/seatIn.css">
+    <link rel="stylesheet" type="text/css" href="css/seatlist.css">
 </head>
 <body>
 <div class="findseat">
@@ -79,6 +79,19 @@
 
 </div>
 <script>
+    function getTokenFromCookie() {
+        var cookies = document.cookie.split(";"); // 获取所有的Cookie
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.startsWith("token=")) {
+                // 找到名为"token"的Cookie
+                var token = cookie.substring("token=".length, cookie.length);
+                return token;
+            }
+        }
+        return null; // 如果没有找到token，则返回null
+    }
+
     $(function () {
         // 1. 给登录按钮绑定单击事件
         $("#btn_sub").on("click", function() {
@@ -88,7 +101,8 @@
             var min_f = document.getElementById('start-minute').value;
             var hour_t = document.getElementById('end-hour').value;
             var min_t = document.getElementById('end-minute').value;
-            $.get(" /seat/queryseat ", {token: " ", place: place,seat:seat, hour_f: hour_f, min_f: min_f, hour_t: hour_t, min_t: min_t
+            var token = getTokenFromCookie();
+            $.get(" /seat/queryseat ", {token:token, place: place,seat:seat, hour_f: hour_f, min_f: min_f, hour_t: hour_t, min_t: min_t
             }, function (data) {
                 if(data.seat === 0){
                     var lis ='<p>当前预约人数为0</p>'

@@ -3,8 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/messages_zh.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/findrecord.css">
 </head>
 <body>
-<h1>这是查询借阅记录</h1>
+<div class="findrecord">
+    <div id="alertMsg" class="alert alert-danger"></div>
+    <div class="showbooks"><!--右半部分-->
+        <table class="show" id="foundrecord">
+            <tr>
+                <th>借用/还书时间</th>
+                <th>书籍ID</th>
+                <th>书名</th>
+                <th>操作</th>
+            </tr>
+            <tr>
+                <td>2021-2-15</td>
+                <td>3</td>
+                <td>高等数学</td>
+                <td>还书</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script>
+    function getTokenFromCookie() {
+        var cookies = document.cookie.split(";"); // 获取所有的Cookie
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.startsWith("token=")) {
+                // 找到名为"token"的Cookie
+                var token = cookie.substring("token=".length, cookie.length);
+                return token;
+            }
+        }
+        return null; // 如果没有找到token，则返回null
+    }
+
+    $(function () {
+            var userid = ""
+        var token = getTokenFromCookie();
+            $.get("/book/userhistory", {token:token, userid:userid}, function (resp) {
+                var code = resp.code;
+                var msg = resp.msg;
+                var data = resp.data;
+                if (code === 1) {
+                    var lis =''
+                    for (var i = 0; i < data.length; i++) {
+                        lis+='<tr>'
+                        lis+='<td>'+data[i].logDate+'</td>'
+                        lis+='<td>'+data[i].bookId+'</td>'
+                        lis+='<td>'+data[i].bookName+'</td>'
+                        if(data[i].type===1) {
+                            lis+='<td>借出</td></tr>'
+                            }
+                        else{
+                            lis+='<td>还书</td></tr>'
+                        }
+                    }
+                    $("#foundrecord").html(lis);
+                }else{
+                    var lis ='查询失败'
+                    $("#alertMsg").html(lis);
+                }
+            });
+    })
+</script>
 </body>
 </html>
