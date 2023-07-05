@@ -22,7 +22,7 @@
     <div id="alertMsg" class="alert alert-danger"></div>
     <div class="showbooks"><!--右半部分-->
         <table class="show" id="foundbooks">
-            <tr>
+            <!--<tr>
                 <th>书籍编号</th>
                 <th>书名</th>
                 <th>作者</th>
@@ -31,7 +31,7 @@
                 <th>出版时间</th>
                 <th>状态</th>
             </tr>
-            <!--<tr>
+            <tr>
                 <td>1</td>
                 <td>高等代数</td>
                 <td>张华</td>
@@ -63,22 +63,34 @@
         // 1. 给登录按钮绑定单击事件
         $("#Seach_sub").on("click", function() {
             var name = document.getElementById('bookName').value;
-            var token = getTokenFromCookie();
-            $.get(" /book/find", {token:token, name:name}, function (resp) {
+            var token =getTokenFromCookie();
+            $.get("http://112.124.10.96:80/book/find", {token:token, name:name}, function (resp) {
                 var code = resp.code;
                 var msg = resp.msg;
                 var data = resp.data;
-                if (code === 1) {
-                    var lis =''
+                if (code == 1) {
+                    var lis ='<tr>\n' +
+                        '                <th>书籍编号</th>\n' +
+                        '                <th>书名</th>\n' +
+                        '                <th>作者</th>\n' +
+                        '                <th>出版社</th>\n' +
+                        '                <th>类型</th>\n' +
+                        '                <th>出版时间</th>\n' +
+                        '                <th>状态</th>\n' +
+                        '            </tr>'
                     for (var i = 0; i < data.length; i++) {
                         lis+='<tr>'
-                        lis+='<td>'+data[i].bookName+'</td>'
                         lis+='<td>'+data[i].bookId+'</td>'
+                        lis+='<td>'+data[i].bookName+'</td>'
                         lis+='<td>'+data[i].bookAuthor+'</td>'
                         lis+='<td>'+data[i].bookPress+'</td>'
-                        lis+='<td>'+data[i].type+'</td>'
-                        lis+='<td>'+data[i].bookPublicationDate+'</td>'
-                        lis+='<td>'+data[i].alive+'</td></tr>'
+                        lis+='<td>'+data[i].typeName+'</td>'
+                        lis+='<td>'+data[i].bookPublication_date+'</td>'
+                        if(data[i].alive==1){
+                            lis+='<td>可借</td></tr>'
+                        }else{
+                            lis+='<td>不可借</td></tr>'
+                        }
                     }
                     $("#foundbooks").html(lis);
                     }else{

@@ -95,7 +95,7 @@
             var hour_t = document.getElementById('end-hour').value;
             var min_t = document.getElementById('end-minute').value;
             var token = getTokenFromCookie();
-            $.get(" /seat/getseat  ", {token:token, place: place,seat:seat, hour_f: hour_f, min_f: min_f, hour_t: hour_t, min_t: min_t
+            $.get(" http://112.124.10.96:80/seat/getseat  ", {token:token, place: place,seat:seat, hour_f: hour_f, min_f: min_f, hour_t: hour_t, min_t: min_t
             }, function (data) {
                     $("#alertMsg").html(data.msg);
             });

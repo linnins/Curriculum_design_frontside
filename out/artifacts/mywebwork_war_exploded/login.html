@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/messages_zh.min.js"></script>
     <title>Document</title>
     <style>
         * {
@@ -188,7 +191,7 @@
             <label for="password">password</label>
         </div>
 
-        <button class="btn" type="button" id="btn_sub">submit
+        <button class="btn" type="submit" id="btn_sub">submit
             <span></span>
             <span></span>
             <span></span>
@@ -204,22 +207,27 @@
     $(function () {
         // 1. 给登录按钮绑定单击事件
         $("#btn_sub").on("click", function(){
+            var name = document.getElementById('username').value;
+            var word = document.getElementById('password').value;
             // 2. 发送ajax请求，提交异步表单数据
-            $.post("/user/login", $("#loginForm").serialize(), function (data) {
-                // data : {flag:false,errorMsg:""}
-                if (data.code===1) {
-                    // 登录成功
-                    var expirationDate = new Date();
-                    expirationDate.setDate(expirationDate.getDate() + 1);
-                    document.cookie = "token=" + data.token + "; expires=" + expirationDate.toUTCString() + "; path=/";
-                    location.href = "index.html"
 
-                } else {
-                    // 登录失败
-                    $("#errorMsg").html("登录失败");
+            $.ajax({
+                url: "http://112.124.10.96:80/user/login",  // 替换成你的请求URL
+                type: "POST",
+                data: {
+                    username: name,  // 替换成你的用户名
+                    password: word   // 替换成你的密码
+                },
+                dataType: "json",   // 根据需要指定响应数据类型
+                success: function(response) {
+                    // 请求成功时的处理逻辑
+                    console.log(response);
+                },
+                error: function(xhr, status, error) {
+                    // 请求失败时的处理逻辑
+                    console.error(error);
                 }
-            })
-            // 3. 处理响应结果
+            });
         });
     });
 </script>

@@ -13,7 +13,7 @@
     <div id="alertMsg" class="alert alert-danger"></div>
     <div class="showbooks"><!--右半部分-->
         <table class="show" id="foundrecord">
-            <tr>
+            <!--<tr>
                 <th>借用/还书时间</th>
                 <th>书籍ID</th>
                 <th>书名</th>
@@ -24,7 +24,7 @@
                 <td>3</td>
                 <td>高等数学</td>
                 <td>还书</td>
-            </tr>
+            </tr>-->
         </table>
     </div>
 </div>
@@ -44,14 +44,18 @@
     }
 
     $(function () {
-            var userid = ""
         var token = getTokenFromCookie();
-            $.get("/book/userhistory", {token:token, userid:userid}, function (resp) {
+            $.get("http://112.124.10.96:80/book/userhistory", {token:token}, function (resp) {
                 var code = resp.code;
                 var msg = resp.msg;
                 var data = resp.data;
-                if (code === 1) {
-                    var lis =''
+                if (code == 1) {
+                    var lis ='<tr>\n' +
+                        '                <th>借用/还书时间</th>\n' +
+                        '                <th>书籍ID</th>\n' +
+                        '                <th>书名</th>\n' +
+                        '                <th>操作</th>\n' +
+                        '            </tr>'
                     for (var i = 0; i < data.length; i++) {
                         lis+='<tr>'
                         lis+='<td>'+data[i].logDate+'</td>'

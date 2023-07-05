@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/messages_zh.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -204,14 +207,17 @@
     $(function () {
         // 1. 给登录按钮绑定单击事件
         $("#btn_sub").on("click", function(){
+            var name = document.getElementById('username').value;
+            var word = document.getElementById('password').value;
             // 2. 发送ajax请求，提交异步表单数据
-            $.post("/user/login", $("#loginForm").serialize(), function (data) {
-                // data : {flag:false,errorMsg:""}
-                if (data.code===1) {
+            $.get("http://112.124.10.96:80/user/login", {password:word , username: name
+        }, function (data) {
+                console.log(data.msg)
+                if (data.code==1) {
                     // 登录成功
                     var expirationDate = new Date();
                     expirationDate.setDate(expirationDate.getDate() + 1);
-                    document.cookie = "token=" + data.token + "; expires=" + expirationDate.toUTCString() + "; path=/";
+                    document.cookie = "token=" + data.data + "; expires=" + expirationDate.toUTCString() + "; path=/";
                     location.href = "index.html"
 
                 } else {

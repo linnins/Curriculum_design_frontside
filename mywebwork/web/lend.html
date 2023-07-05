@@ -40,10 +40,10 @@
     $(function () {
         var bookid = document.getElementById('bookId').value;
         var token = getTokenFromCookie();
-        $.post("/book/lend", {token:token, bookid:bookid}, function (resp) {
+        $.post("http://112.124.10.96:80/book/lend", {token:token, bookid:bookid}, function (resp) {
             var code = resp.code;
             var msg = resp.msg;
-            if (code === 1) {
+            if (code == 1) {
                 var lis ='借阅成功'
 
                 $("#alertMsg").html(lis);
