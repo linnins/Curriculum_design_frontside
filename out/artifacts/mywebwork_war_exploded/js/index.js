@@ -8,6 +8,7 @@ function getStyle(obj, attr) {
 }
 /*运动框架*/
 function startMove(obj, json, fn) {
+    obj.timer = null;
     clearInterval(obj.timer);
     obj.timer = setInterval(function() {
         var bStop = true;

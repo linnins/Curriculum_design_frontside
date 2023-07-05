@@ -20,12 +20,26 @@
 
 
 <script>
+    function getTokenFromCookie() {
+        var cookies = document.cookie.split(";"); // 获取所有的Cookie
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.startsWith("token=")) {
+                // 找到名为"token"的Cookie
+                var token = cookie.substring("token=".length, cookie.length);
+                return token;
+            }
+        }
+        return null; // 如果没有找到token，则返回null
+    }
+
     $(function () {
         // 1. 给登录按钮绑定单击事件
         $("#btn_sub").on("click", function() {
             var place = document.getElementById('partition').value;
             var seat = document.getElementById('seat').value;
-            $.get("/seat/endseat ", {token: " ", place: place,seat:seat}, function (data) {
+            var token = getTokenFromCookie();
+            $.get("/seat/endseat ", {token: token, place: place,seat:seat}, function (data) {
                 $("#alertMsg").html(data.msg);
             });
         });

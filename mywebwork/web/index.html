@@ -31,10 +31,38 @@
     </ul>
   </div>
   <div class="sideLi">
-    <h5 class="sideLih"><a href="login.html" >退出登录</a></h5>
+    <h5 class="sideLih"><a href="#" id="logout" >退出登录</a></h5>
   </div>
 </div>
 <iframe src="welcome.html" frameborder="0" id="ifr" name="window"></iframe>
 <script type="text/javascript" src="js/index.js"></script>
+<script>
+  var link = document.getElementById('logout');
+
+  // 绑定点击事件
+  link.addEventListener('click', function(event) {
+    logout()
+    // 可以通过 event.preventDefault() 来阻止默认的链接行为
+    // 即点击链接后不跳转页面
+    /*event.preventDefault();*/
+
+    // 示例：在控制台打印一条消息
+    console.log('点击链接并触发了其他事件');
+    window.location.href = "login.html";
+  });
+
+
+  function deleteCookie(name) {
+    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  }
+
+  // 在退出登录事件中调用删除cookie的函数
+  function logout() {
+    // 删除名为"sessionID"的cookie
+    deleteCookie('token');
+
+    // 其他清除操作...
+  }
+</script>
 </body>
 </html>

@@ -6,30 +6,88 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <script src="js/messages_zh.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/findbooks.css">
 </head>
 <body>
-<div >
+<div class="findbook">
     <div class="searchbox"><!--左半部分-->
         <h3 class="titleofsearch">查询书籍</h3>
 
         <form action="" id="findBookByNameForm" method="post" accept-charset="utf-8">
             <label>请输入书名</label><br>
-            <input type="text" name="bookName"><br><br>
+            <input type="text" name="bookName" id="bookName"><br><br>
             <button type="button" id="Seach_sub">查询</button>
         </form>
     </div>
-    <div class="showbooks">
+    <div id="alertMsg" class="alert alert-danger"></div>
+    <div class="showbooks"><!--右半部分-->
         <table class="show" id="foundbooks">
             <tr>
-                <th>id</th>
+                <th>书籍编号</th>
                 <th>书名</th>
                 <th>作者</th>
                 <th>出版社</th>
+                <th>类型</th>
+                <th>出版时间</th>
                 <th>状态</th>
             </tr>
-
+            <!--<tr>
+                <td>1</td>
+                <td>高等代数</td>
+                <td>张华</td>
+                <td>哈工大</td>
+                <td>学术</td>
+                <td>2002.5.3</td>
+                <td>可借</td>
+            </tr>-->
         </table>
     </div>
 </div>
+
+<script>
+    function getTokenFromCookie() {
+        var cookies = document.cookie.split(";"); // 获取所有的Cookie
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.startsWith("token=")) {
+                // 找到名为"token"的Cookie
+                var token = cookie.substring("token=".length, cookie.length);
+                return token;
+            }
+        }
+        return null; // 如果没有找到token，则返回null
+    }
+
+    $(function () {
+        console.log('功能测试');
+        // 1. 给登录按钮绑定单击事件
+        $("#Seach_sub").on("click", function() {
+            var name = document.getElementById('bookName').value;
+            var token = getTokenFromCookie();
+            $.get(" /book/find", {token:token, name:name}, function (resp) {
+                var code = resp.code;
+                var msg = resp.msg;
+                var data = resp.data;
+                if (code === 1) {
+                    var lis =''
+                    for (var i = 0; i < data.length; i++) {
+                        lis+='<tr>'
+                        lis+='<td>'+data[i].bookName+'</td>'
+                        lis+='<td>'+data[i].bookId+'</td>'
+                        lis+='<td>'+data[i].bookAuthor+'</td>'
+                        lis+='<td>'+data[i].bookPress+'</td>'
+                        lis+='<td>'+data[i].type+'</td>'
+                        lis+='<td>'+data[i].bookPublicationDate+'</td>'
+                        lis+='<td>'+data[i].alive+'</td></tr>'
+                    }
+                    $("#foundbooks").html(lis);
+                    }else{
+                    var lis ='查询失败'
+                    $("#alertMsg").html(lis);
+                }
+            });
+        });
+    })
+</script>
 </body>
 </html>
